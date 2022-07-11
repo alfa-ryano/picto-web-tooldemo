@@ -253,12 +253,9 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  A clear and well-documented \LaTeX\ document is presented as an
-  article formatted for publication by ACM in a conference proceedings
-  or journal publication. Based on the ``acmart'' document class, this
-  article presents and explains many of the common variations, as well
-  as many of the formatting elements an author may use in the
-  preparation of the documentation of their work.
+Picto Web is a tool designed for complex model exploration. It takes domain-specific models as inputs to generate transient web-based views in different formats (e.g., HTML, Graphviz, PlantUML) using model-to-text transformations in Epsilon Generation Language. 
+Moreover, Picto Web uses caching to reduce the response time of views requests and incremental model-to-text transformation to regenerate views efficiently. 
+Also, it supports push notifications to clients when views are updated and is packaged as a Docker container for ease of use.
 \end{abstract}
 
 %%
@@ -320,7 +317,7 @@
 \label{sec:introduction}
 A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram has to be rendered in one go. Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at different levels of detail. 
 
-In this report, we present Picto Web, a web-based version of the Picto\footnote{\url{https://www.eclipse.org/epsilon/doc/picto}} \cite{dimitris2020picto} model visualisation tool which was originally implemented as an extension of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models.
+In this paper, we present Picto Web, a web-based version of the Picto\footnote{\url{https://www.eclipse.org/epsilon/doc/picto}} \cite{dimitris2020picto} model visualisation tool which was originally implemented as an extension of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models.
 
 
 \section{Picto}
@@ -343,14 +340,14 @@ A challenge with Picto is that it is implemented as a plugin of the Eclipse IDE,
 
 \section{Picto Web}
 
-Picto Web\footnote{\url{https://github.com/alfayohannis/picto-web}} is a web-based version of Picto. 
+Picto Web\footnote{\url{https://github.com/epsilonlabs/picto-web}} is a web-based version of Picto. 
 It maintains the core features of the desktop version of Picto, such as supporting the lazy generation of views, drilling-up/down tree views, multi-views, and multi-formats, but it is implemented as a multi-tenant client-server web application that can be accessed through a standard web browser to perform interactive complex model exploration. 
 Picto Web monitors model files and visualisation templates for changes and immediately propagates the modification to the viewers' web browsers, delivering a live user experience.
 
 \subsection{Running Example}
 \label{sec:running_example}
 
-This report uses the same contrived social network example as in the original Picto documentation\footnote{\url{https://eclipse.org/epsilon/doc/picto}} to explain Picto Web. As a brief refresher, a social network is a graph that contains a number of people as its nodes linked with \emph{like} and \emph{dislike} relationships. In a view, as shown in Figure \ref{fig:ui_social_network}, a person is depicted as a rectangle while the \emph{like} and \emph{dislike} relationships are presented as green and red edges respectively. This node-edge view is the visualisation of the social network model defined in Listing \ref{lst:model}.
+This paper uses the same contrived social network example as in the original Picto documentation\footnote{\url{https://eclipse.org/epsilon/doc/picto}} to explain Picto Web. As a brief refresher, a social network is a graph that contains a number of people as its nodes linked with \emph{like} and \emph{dislike} relationships. In a view, as shown in Figure \ref{fig:ui_social_network}, a person is depicted as a rectangle while the \emph{like} and \emph{dislike} relationships are presented as green and red edges respectively. This node-edge view is the visualisation of the social network model defined in Listing \ref{lst:model}.
 
 \subsection{User Interface}
 \label{sec:user_interface}
@@ -522,10 +519,7 @@ Similar to Sprotty, it only supports rendering views in node-edge diagrams. As a
 \section{Conclusions and Future Work}
 \label{sec:conclusions_and_future_work}
 
-In this report, we presented Picto Web, a web-based version of the Picto model visualisation tool which was originally implemented as a plug-in of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models. Going forward, we plan to further improve the performance of visualisation transformations in Picto Web by establishing an element/property access trace of the visualisation transformations, to enable more fine-grained regeneration and invalidation of generated views.
-
-%In this report, we have presented Picto Web, an extension of the Eclipse Picto plugin. We use web technologies to make Picto's complex model exploration accessible concurrently to multiple remote viewers and unbounded by the Eclipse environment. In the next phase, we plan to improve the performance of Picto Web by identifying the elements and properties accessed during a transformation. Therefore, we can optimise the performance by only (re)generating view contents associated with the accessed elements and properties instead of generating all view contents when a model file is modified. 
-
+In this paper, we presented Picto Web, a web-based version of the Picto model visualisation tool which was originally implemented as a plug-in of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models. Going forward, we plan to further improve the performance of visualisation transformations in Picto Web by establishing an element/property access trace of the visualisation transformations, to enable more fine-grained regeneration and invalidation of generated views.
 
 
 \bibliographystyle{ACM-Reference-Format}
