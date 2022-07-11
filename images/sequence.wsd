@@ -1,0 +1,43 @@
+@startuml sequence
+
+actor Lisa as lisa <<Developer>>
+entity "Social-\nNetwork" as model <<Model>>
+box "Picto Web" #F0F0F0
+  control "File-\nWatcher" as filewatcher 
+  control Transformer as transformer 
+  collections "View-\nContent-\nCache" as cache 
+  boundary "Picto-\nController" as controller 
+  queue Broker as broker
+end box
+actor Mike as mike <<Client>> 
+actor Nick as nick <<Client>> 
+
+activate model
+activate lisa
+activate transformer
+activate filewatcher
+activate cache
+activate controller
+activate broker
+activate mike
+activate nick
+
+mike -> broker: subscribe()
+nick -> broker: subscribe()
+mike -> controller: request-\nView\n(path="/0/1")
+controller ->cache: getView-\n("/0/1")
+cache --> controller: "/0/1" view
+controller --> mike: "/0/1" view
+lisa -> model: setName\n("/0/1",\n"Alex")
+model -> filewatcher: monitor\n(files)
+filewatcher -> transformer: transform\n(files)
+transformer -> cache : put(path,\nview-\nContent)
+transformer -> broker : publish(newViewContents)
+broker --> mike : newView-\nContents
+broker --> nick : newView-\nContents
+
+
+
+
+
+@enduml
