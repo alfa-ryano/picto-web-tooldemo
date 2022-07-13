@@ -328,6 +328,12 @@ Moreover, it supports push notifications to clients when views are updated and i
 \label{sec:introduction}
 A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram has to be rendered in one go. Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at different levels of detail. 
 
+{ \color{blue}
+The paper perfectly describes the tool.  When describing Picto Web (section 3) it is highlighted that Picto monitors files for changes,  then all the process is described and improvements on the view regeneration is remarked as future work. 
+However,  I miss some sentences in the introduction about the view regeneration,  how it can help stakeholders and how efficient it could be. 
+I think the introduction is full focused in the visualization (ease the visualization of complex models) but don't introduce the view regeneration facility that is described a lot later,  indeed,  the improvement of this feature is remarked as the only future work.
+}
+
 In this paper, we present Picto Web, a web-based version of the Picto\footnote{\url{https://www.eclipse.org/epsilon/doc/picto}} \cite{dimitris2020picto} model visualisation tool which was originally implemented as an extension of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models.
 
 \section{Picto}
@@ -414,7 +420,7 @@ Picto requires at least three types of files: model files (any model representat
 </SocialNetwork>
 \end{lstlisting}
 
-The EGL transformation files consist of EGL templates that produce individual views, and an EGX coordination program that specifies how the templates should be executed against different elements in the mode(s). Listing \ref{lst:egx} shows an excerpt of the EGX transformation coordination program of this example. Rule \texttt{Network2Graphviz} runs the \texttt{socialnetwork2} \texttt{graphviz.egl} template of Listing \ref{lst:egl} for every \texttt{SocialNetwork} element in the source model and produces a Graphviz-based view for it. The EGL template of Listing \ref{lst:egl} defines the logic for generating the content of the view. An actual generated view in Graphviz is shown in Listing \ref{lst:output}. 
+The EGL transformation files consist of EGL templates that produce individual views, and an EGX coordination program that specifies how the templates should be executed against different elements in the model(s). Listing \ref{lst:egx} shows an excerpt of the EGX transformation coordination program of this example. Rule \texttt{Network2Graphviz} runs the \texttt{socialnetwork2} \texttt{graphviz.egl} template of Listing \ref{lst:egl} for every \texttt{SocialNetwork} element in the source model and produces a Graphviz-based view for it. The EGL template of Listing \ref{lst:egl} defines the logic for generating the content of the view. An actual generated view in Graphviz is shown in Listing \ref{lst:output}. 
 
 \begin{lstlisting}[firstnumber=1,style=egx,caption={The Network2Graphviz EGX rule},label=lst:egx]
 rule Network2Graphviz 
@@ -531,6 +537,11 @@ Similar to Sprotty, KLD only supports rendering views in node-edge diagrams. As 
 
 In this paper, we presented Picto Web, a web-based version of the Picto model visualisation tool which was originally implemented as a plug-in of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models. Going forward, we plan to further improve the performance of visualisation transformations in Picto Web by establishing an element/property access trace of the visualisation transformations, to enable more fine-grained regeneration and invalidation of generated views.
 
+{ \color{blue} 
+I would make small changes to the figures:\\
+1) In figure \ref{fig:architecture} I would change "Web Picto client" to "Picto Web client" to match the text. \\
+2) In figure \ref{fig:sequence} some labels may need one or two line breaks as in  "Publish(newViewContents)", "path="/0/1"" or "/0/1 view".\\
+}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{bibliography}
