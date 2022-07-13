@@ -199,22 +199,32 @@
 % \country{India}}
 
 \author{Alfa Yohannis}
-\affiliation{%
+\affiliation{
   \institution{University of York}
-%  \streetaddress{30 Shuangqing Rd}
   \city{York}
-  \state{North Yorkshire}
   \country{United Kingdom}}
 \email{alfa.yohannis@york.ac.uk}
 
 \author{Dimitris Kolovos}
-\affiliation{%
+\affiliation{
   \institution{University of York}
-  %  \streetaddress{30 Shuangqing Rd}
   \city{York}
-  \state{North Yorkshire}
   \country{United Kingdom}}
 \email{dimitris.kolovos@york.ac.uk}
+
+\author{Antonio García-Domínguez}
+\affiliation{
+	\institution{University of York}
+	\city{York}
+	\country{United Kingdom}}
+\email{a.garcia-dominguez@york.ac.uk}
+
+\author{Carlos Javier Fernández Candel}
+\affiliation{
+	\institution{University of York}
+	\city{York}
+	\country{United Kingdom}}
+\email{carlos.fernandezcandel@york.ac.uk}
 
 %\author{Charles Palmer}
 %\affiliation{%
@@ -319,7 +329,6 @@ Also, it supports push notifications to clients when views are updated and is pa
 A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram has to be rendered in one go. Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at different levels of detail. 
 
 In this paper, we present Picto Web, a web-based version of the Picto\footnote{\url{https://www.eclipse.org/epsilon/doc/picto}} \cite{dimitris2020picto} model visualisation tool which was originally implemented as an extension of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models.
-
 
 \section{Picto}
 \label{sec:picto}
@@ -514,7 +523,7 @@ Sprotty only supports node-edge diagrams and does not support rendering views co
 
 KIELER Lightweight Diagram (KLD) framework \cite{schneider2013just} uses XTend, Piccolo2D and EMF to allow on-demand model visualisation, and also the KIELER Infrastructure for Meta Layout (KIML) for defining diagram layouts. KLD uses three EMF-based models -- KLayoutData, KRendering, and KGraph -- for users to describe a diagram. KLD is also extensible via Java/Xtend interfaces, which should be implemented to transform and map a semantic model to KGraph and KRendering models. 
 
-Similar to Sprotty, it only supports rendering views in node-edge diagrams. As a comparison, Picto and Picto Web support rendering views in multiple formats, such as table/form views in HTML, PlatUML and Graphviz diagrams, and views generated using JavaScript graphical libraries, e.g., Three.js.
+Similar to Sprotty, KLD only supports rendering views in node-edge diagrams. As a comparison, Picto and Picto Web support rendering views in multiple formats, such as table/form views in HTML, PlatUML and Graphviz diagrams, and views generated using JavaScript graphical libraries, e.g., Three.js.
 
 
 \section{Conclusions and Future Work}
