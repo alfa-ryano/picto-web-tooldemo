@@ -103,7 +103,6 @@
   File-Watch-er Trans-form-er View-Con-tent-Cache Pic-to-Con-trol-ler
 }
 
-
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -264,9 +263,9 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Exploring and visualising a complex model in a single view can be challenging as it can require considerable amount of computational resources and make the model difficult to comprehend due to information overload.
-Picto Web is a tool designed for complex model exploration. Using the Epsilon Generation Language for model-to-text transformation, it transforms domain-specific models into transient web-based views in different formats, such as HTML, Graphviz, and PlantUML. 
-Picto Web uses caching to reduce the response time of view requests and incremental model-to-text transformation to regenerate views efficiently. 
+Exploring and visualising a complex model in a single view can be challenging as it can require a considerable amount of computational resources and make the model difficult to comprehend due to information overload.
+Picto Web is a tool designed for complex model exploration. Using the Epsilon Generation Language for model-to-text transformation, it can transform domain-specific models into multiple transient web-based views in different formats, such as HTML, Graphviz, and PlantUML. 
+Picto Web uses lazy and incremental model-to-text transformation to (re)generate views efficiently. 
 Moreover, it supports push notifications to clients when views are updated and is packaged as a Docker container for ease of use.
 \end{abstract}
 
@@ -313,6 +312,7 @@ Moreover, it supports push notifications to clients when views are updated and i
 % the empty versions below
 \newcommand{\carlos}[1]{{\color{blue} (CJFC) #1}}
 \newcommand{\agd}[1]{{\color{DarkGreen} (AGD) #1}}
+\newcommand{\dimitris}[1]{\textbf{\color{teal}[Dimitris: #1]}}
 
 % Versions to be used for final submission
 %\newcommand{\carlos}[1]{}
@@ -336,7 +336,7 @@ Moreover, it supports push notifications to clients when views are updated and i
 
 \section{Introduction}
 \label{sec:introduction}
-A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram has to be rendered in one go. Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at different levels of detail. 
+A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram (or similar visual representation) has to be rendered in one go. Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at different levels of detail. 
 
 \carlos{
 The paper perfectly describes the tool.  When describing Picto Web (section 3) it is highlighted that Picto monitors files for changes,  then all the process is described and improvements on the view regeneration is remarked as future work. 
@@ -351,11 +351,10 @@ In this paper, we present Picto Web, a web-based version of the Picto\footnote{\
 \section{Picto}
 \label{sec:picto}
 
-Earlier in our work we developed Picto \cite{dimitris2020picto}, an Eclipse plugin that uses lazy model-to-text transformation to generate transient graphical views from heterogeneous models. Figure \ref{fig:picto-eclipse} shows a screenshot of Picto for Eclipse.
+Picto \cite{dimitris2020picto} is an Eclipse plugin that uses lazy model-to-text transformation to generate transient graphical views from heterogeneous models. Figure \ref{fig:picto-eclipse} shows a screenshot of Picto within Eclipse. 
 
 % persons vs people: https://www.merriam-webster.com/words-at-play/people-vs-persons
-
-In the example of Figure \ref{fig:picto-eclipse}, we wish to visualise models conforming to a contrived social network metamodel from \cite{dimitris2020picto}. In particular, we use a sample model containing four people (Alice, Bob,  Charlie and Dawn) and like/dislike relationships between them. From such social network models we wish to produce one node-edge view for the entire social network, and one view for each member of the network that omits anyone they neither like nor dislike. 
+In this example, we wish to visualise models conforming to a contrived social network metamodel from \cite{dimitris2020picto}. In particular, we use a sample model containing four people (Alice, Bob,  Charlie and Dawn) and like/dislike relationships between them. From such social network models we wish to produce one node-edge view for the entire social network, and one view for each member of the network that omits any anyone they neither like nor dislike.
 
 Picto’s user interface has two main components. On its left-hand side is a tree widget that displays the titles and icons of the views (Social Network, Alice, Bob, Charlie and Dawn) that users can select from. Once a view is selected, its content is generated and rendered in an embedded web browser -- through a series of transformations -- on the right-hand side of Picto. In Figure \ref{fig:picto-eclipse}, the selected view visualises the entire model in the form of a Graphviz-based node-edge diagram. Beyond Graphviz, Picto also supports PlantUML and SVG/HTML as visualisation formats, and also features an extensible architecture that enables adopters to extend it with additional diagram-as-code formats.  
 
@@ -366,13 +365,13 @@ Picto’s user interface has two main components. On its left-hand side is a tre
   \label{fig:picto-eclipse}
 \end{figure}
 
-A challenge with Picto is that it is implemented as a plugin of the Eclipse IDE, which means that for engineers to use it, they need to install Java, Eclipse and Picto and check out the models they wish to explore (as well as the respective visualisation transformations) locally. While this is not an issue for software developers who are already familiar with Eclipse, it can represent a significant barrier for other engineers and stakeholders. When we first introduced Picto to our partners, there was a strong interest for an Eclipse-independent version of the tool which would be accessible through a standard web browser with no further local software installation requirements. This motivated us to develop Picto Web, which is presented below.
+A challenge with Picto is that it is implemented as a plugin of the Eclipse IDE, which means that for engineers to use it, they need to install Java, Eclipse and Picto and check out the models they wish to explore (as well as the respective visualisation transformations) locally. While this is not an issue for software developers who are already familiar with Eclipse, it can represent a significant barrier for other engineers and stakeholders. %When we first introduced Picto to our partners, there was a strong interest for an Eclipse-independent version of the tool which would be accessible through a standard web browser with no further local software installation requirements. This motivated us to develop Picto Web, which is presented below.
 
 \section{Picto Web}
 
 Picto Web\footnote{\url{https://github.com/epsilonlabs/picto-web}} is a web-based version of Picto. 
-It maintains the core features of the desktop version of Picto, such as supporting the lazy generation of views, drilling-up/down tree views, multi-views, and multi-formats, but it is implemented as a multi-tenant client-server web application that can be accessed through a standard web browser to perform interactive complex model exploration. 
-Picto Web monitors model files and visualisation templates for changes and immediately propagates the modification to the viewers' web browsers, delivering a live user experience.
+It maintains the core features of the Eclipse-based version of Picto, such as supporting the lazy generation of views, drilling-up/down tree views, multi-views, and multi-formats, but it is implemented as a multi-tenant client-server web application that can be accessed through a standard web browser to perform interactive complex model exploration. 
+Picto Web monitors model files and visualisation model-to-text templates for changes and immediately propagates any updates to generated views to the viewers' web browsers, delivering a live user experience.
 
 \subsection{Running Example}
 \label{sec:running_example}
@@ -426,7 +425,7 @@ Picto requires at least three types of files: model files (any model representat
 
 \begin{lstlisting}[firstnumber=1,style=model,caption={An a social network model as the input file for the lazy transformation. The format of the ids is simplified.},label=lst:model,float]
 <?xml version="1.0" encoding="ASCII"?>
-  <SocialNetwork xmlns="socialnetwork" xmi:id="sn">
+<SocialNetwork xmlns="socialnetwork" xmi:id="sn">
   <people xmi:id="a" name="Alice" likes="b c"/>
   <people xmi:id="b" name="Bob" likes="a" dislikes="c"/>
   <people xmi:id="c" name="Charlie" likes="a" dislikes="d"/>
@@ -434,7 +433,7 @@ Picto requires at least three types of files: model files (any model representat
 </SocialNetwork>
 \end{lstlisting}
 
-The EGL transformation files consist of EGL templates that produce individual views, and an EGX coordination program that specifies how the templates should be executed against different elements in the model(s). Listing \ref{lst:egx} shows an excerpt of the EGX transformation coordination program of this example. Rule \texttt{Network2Graphviz} runs the \texttt{socialnetwork2} \texttt{graphviz.egl} template of Listing \ref{lst:egl} for every \texttt{SocialNetwork} element in the source model and produces a Graphviz-based view for it. The EGL template of Listing \ref{lst:egl} defines the logic for generating the content of the view. An actual generated view in Graphviz is shown in Listing \ref{lst:output}. 
+The visualisation transformation consists of EGL templates that produce individual views, and an EGX coordination program that specifies how the templates should be executed against different elements in the model(s). Listing \ref{lst:egx} shows an excerpt of the EGX transformation coordination program of this example. Rule \texttt{Network2Graphviz} runs the \texttt{socialnetwork2} \texttt{graphviz.egl} template of Listing \ref{lst:egl} for every \texttt{SocialNetwork} element in the source model and produces a Graphviz-based view for it. The EGL template of Listing \ref{lst:egl} defines the logic for generating the content of the view. An actual generated view in Graphviz is shown in Listing \ref{lst:output}. 
 
 \begin{lstlisting}[firstnumber=1,style=egx,caption={The Network2Graphviz EGX rule},label=lst:egx,float]
 rule Network2Graphviz 
@@ -506,7 +505,7 @@ The architecture of Picto Web is displayed in Figure \ref{fig:architecture} and 
   \label{fig:architecture}
 \end{figure}
 
-The server-side part is composed of the \texttt{FileWatcher}, \texttt{Trans\-form\-er}, \texttt{ViewContentCache}, \texttt{PictoController}, and \texttt{Broker} components shown on the left hand side of the figure. The \texttt{FileWatcher} component is responsible for monitoring a directory that contains the models that Picto Web needs to visualise (see Section \ref{sec:picto}). When any of the files is modified (added, deleted, or updated), \texttt{FileWatcher} detects the change and notifies the \texttt{Transformer} component, which then generates, refreshes, or invalidates the contents of the respective views. 
+The server-side part of Picto Web consists of the \texttt{FileWatcher}, \texttt{Transformer}, \texttt{ViewContentCache}, \texttt{PictoController}, and \texttt{Broker} components shown on the left hand side of the figure. The \texttt{FileWatcher} component is responsible for monitoring a directory that contains the models that Picto Web needs to visualise (see Section \ref{sec:picto}). When any of the files is modified (added, deleted, or updated), \texttt{FileWatcher} detects the change and notifies the \texttt{Transformer} component, which then generates, refreshes, or invalidates the contents of the respective views\footnote{A description of the mechanisms used to implement incremental view invalidation and re-generation upon changes in models and templates is beyond the scope of this paper.}.
 
 After that, Picto Web puts the generated views into a cache (\texttt{ViewContentCache}) that maps the paths of the views in the tree view to their actual contents. The cache is used to avoid wastefully re-generating views which cannot have been impacted since the last time a client requested them.
 
@@ -514,7 +513,7 @@ Every time a client requests the content of a specific view, \texttt{PictoContro
 
 \texttt{Broker} is a component responsible for pushing updates to Picto Web clients. Every time a Picto Web client starts visualising a model, the client subscribes to the \texttt{Broker} so that it can receive further updates from the Picto Web server-side component if any of the model files are subsequently modified. After transformation, the \texttt{Transformer} publishes new content views to the \texttt{Broker}.
 
-We have packed the Picto Web server in the form of a Docker image\footnote{\url{https://hub.docker.com/r/alfayohannisyorkacuk/picto-web}} so that users can easily deploy and test it. Users need to run the following command to launch the Docker image.
+We have packaged the Picto Web server in the form of a Docker image\footnote{\url{https://hub.docker.com/r/alfayohannisyorkacuk/picto-web}} so that users can easily deploy and test it. Users need to run the following command to launch the Docker image.
 
 \begin{verbatim}
 docker run --rm -it -v $PWD:/workspace \
@@ -532,9 +531,9 @@ The Picto Web server can then be accessed using a web browser via \texttt{http:/
   \label{fig:sequence}
 \end{figure}
 
-This section demonstrates Picto Web's internal control flow, visualised in the sequence diagram in Figure \ref{fig:sequence}. Suppose that the \texttt{ViewContentCache} has been populated with view contents through an initial transformation executed when a developer (Lisa) created the social network model---the process is not displayed in the diagram. Stakeholders Mike and Nick wish to explore Lisa's model and start running Picto Web clients. The clients subscribe to the broker provided by the Picto Web server application so that they can receive further updates on the model. 
+This section demonstrates Picto Web's internal control flow, visualised in the sequence diagram of Figure \ref{fig:sequence}. Suppose that the \texttt{ViewContentCache} has been populated with view contents through an initial transformation executed when a developer (Lisa) created the social network model -- the process is not displayed in the diagram. Stakeholders Mike and Nick wish to explore Lisa's model and start running Picto Web clients. The clients subscribe to the broker provided by the Picto Web server application so that they can receive further updates on the model. 
 
-Mike is interested in knowing more about Alice's social network. Therefore, he sends a view request to Picto Web with a parameter containing Alice's view path, ``/0/1''\footnote{Simplified format}. Since the view content of the path is already available in the \texttt{ViewContentCache} from the initial transformation, \texttt{Picto\-Controller} (the class that handles the request) retrieves Alice's view content from the cache and sends it back to Mike's client to be displayed.
+Mike is interested in knowing more about Alice's social network. Therefore, he sends a view request to Picto Web with a parameter containing Alice's view path, ``/0/1''\footnote{Simplified format}. Since the view content of the path is already available in the \texttt{ViewContentCache} from the initial transformation, \texttt{Picto\-Controller} (the component that handles the request) retrieves Alice's view content from the cache and sends it back to Mike's client to be displayed.
 
 At some point, Lisa decides to rename ``Alice'' to ``Alex'' and save the change to the model file. \texttt{FileWatcher} detects that the file has been modified and notifies the \texttt{Transformer} to generate new view contents from the modified file and update the \texttt{ViewContentCache}. The \texttt{Transformer} also publishes the new content views to the \texttt{Broker} so that the subscribers, Mike and Nick, also receive the new content views and perform live updates on the view contents they currently display.
 
