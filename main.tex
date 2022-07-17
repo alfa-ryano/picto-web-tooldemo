@@ -313,6 +313,7 @@ Moreover, it supports push notifications to clients when views are updated and i
 \newcommand{\carlos}[1]{{\color{blue} (CJFC) #1}}
 \newcommand{\agd}[1]{{\color{DarkGreen} (AGD) #1}}
 \newcommand{\dimitris}[1]{\textbf{\color{teal}[Dimitris: #1]}}
+\newcommand{\al}[1]{{\color{purple} Al: #1}}
 
 % Versions to be used for final submission
 %\newcommand{\carlos}[1]{}
@@ -336,15 +337,17 @@ Moreover, it supports push notifications to clients when views are updated and i
 
 \section{Introduction}
 \label{sec:introduction}
-A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram (or similar visual representation) has to be rendered in one go. Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at different levels of detail. 
+A model is commonly considered complex when it has a large number of heterogeneous elements which are involved in non-trivial relationships \cite{boccara2010complex,klosterman2012complex}. One way to understand and communicate such models is through visualisation. However, displaying all elements and their relationships in a single graphical representation is often undesirable since it can overload users with information and make visualisations challenging to comprehend. In terms of computation, this approach is also inefficient for large models since a potentially very large and complex diagram (or similar visual representation) has to be rendered in one go. 
+Moreover, in a multi-user environment, the visualisation also has to deal with multiple, repeated requests, whether a user is refreshing a view or different users requesting the same view over the network.
+Thus, novel mechanisms are necessary to allow engineers and other stakeholders to perform contextual exploration of complex models from different viewpoints and at varying levels of detail. The visualisation also should be able to handle repeated requests from multiple users and return the requested views promptly.
 
-\carlos{
-The paper perfectly describes the tool.  When describing Picto Web (section 3) it is highlighted that Picto monitors files for changes,  then all the process is described and improvements on the view regeneration is remarked as future work. 
-However,  I miss some sentences in the introduction about the view regeneration,  how it can help stakeholders and how efficient it could be. 
-I think the introduction is full focused in the visualization (ease the visualization of complex models) but don't introduce the view regeneration facility that is described a lot later,  indeed,  the improvement of this feature is remarked as the only future work.
-}
-
-\agd{I agree with Carlos. One way to motivate the use of caching is to deal with repeated requests for the same visualisation from multiple users over the network, or from the same person refreshing the page. By the way, are you sure we really do regeneration, and not just cache invalidation?}
+%\carlos{
+%The paper perfectly describes the tool.  When describing Picto Web (section 3) it is highlighted that Picto monitors files for changes,  then all the process is described and improvements on the view regeneration is remarked as future work. 
+%However,  I miss some sentences in the introduction about the view regeneration,  how it can help stakeholders and how efficient it could be. 
+%I think the introduction is full focused in the visualisation (ease the visualisation of complex models) but don't introduce the view regeneration facility that is described a lot later,  indeed,  the improvement of this feature is remarked as the only future work.
+%}
+%
+%\agd{I agree with Carlos. One way to motivate the use of caching is to deal with repeated requests for the same visualisation from multiple users over the network, or from the same person refreshing the page. By the way, are you sure we really do regeneration, and not just cache invalidation?}
 
 In this paper, we present Picto Web, a web-based version of the Picto\footnote{\url{https://www.eclipse.org/epsilon/doc/picto}} \cite{dimitris2020picto} model visualisation tool which was originally implemented as an extension of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models.
 
@@ -361,7 +364,9 @@ Picto’s user interface has two main components. On its left-hand side is a tre
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{images/picto-eclipse.png}
-  \caption{Picto plugin for Eclipse environment.\agd{would it be more readable to crop the figure to just the .picto editor, the .model editor, and the Picto views? You don't need the Properties view.}}
+  \caption{Picto plugin for Eclipse environment.
+%  	\agd{would it be more readable to crop the figure to just the .picto editor, the .model editor, and the Picto views? You don't need the Properties view.}
+  }
   \label{fig:picto-eclipse}
 \end{figure}
 
@@ -526,7 +531,7 @@ The Picto Web server can then be accessed using a web browser via \texttt{http:/
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.89\linewidth]{images/sequence.png}
+  \includegraphics[width=1\linewidth]{images/sequence}
   \caption{Requests and Updates of Picto Web's view contents.}
   \label{fig:sequence}
 \end{figure}
@@ -551,13 +556,14 @@ Similar to Sprotty, KLD only supports rendering views in node-edge diagrams. As 
 \section{Conclusions and Future Work}
 \label{sec:conclusions_and_future_work}
 
-In this paper, we presented Picto Web, a web-based version of the Picto model visualisation tool which was originally implemented as a plug-in of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models. Going forward, we plan to further improve the performance of visualisation transformations in Picto Web by establishing an element/property access trace of the visualisation transformations, to enable more fine-grained regeneration and invalidation of generated views.\agd{Would it make sense to cite the paper on property access traces? https://doi.org/10.1007/s10270-018-0666-5}
+In this paper, we presented Picto Web, a web-based version of the Picto model visualisation tool which was originally implemented as a plug-in of the Eclipse IDE. Unlike Picto, Picto Web does not require local software installation, which makes it more suitable for a broader audience of developers and stakeholders who would benefit from access to dynamically-generated graphical views of complex software and system models. Going forward, we plan to further improve the performance of visualisation transformations in Picto Web by establishing an element/property access trace of the visualisation transformations, to enable more fine-grained regeneration and invalidation of generated views.
+%\agd{Would it make sense to cite the paper on property access traces? https://doi.org/10.1007/s10270-018-0666-5}
 
-\carlos{
-I would make small changes to the figures:\\
-1) In figure \ref{fig:architecture} I would change "Web Picto client" to "Picto Web client" to match the text. \\
-2) In figure \ref{fig:sequence} some labels may need one or two line breaks as in  "Publish(newViewContents)", "path="/0/1"" or "/0/1 view".\\
-}
+%\carlos{
+%I would make small changes to the figures:\\
+%1) In figure \ref{fig:architecture} I would change "Web Picto client" to "Picto Web client" to match the text. \\
+%2) In figure \ref{fig:sequence} some labels may need one or two line breaks as in  "Publish(newViewContents)", "path="/0/1"" or "/0/1 view".\\
+%}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{bibliography}
