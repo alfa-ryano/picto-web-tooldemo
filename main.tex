@@ -512,7 +512,7 @@ The architecture of Picto Web is displayed in Figure \ref{fig:architecture} and 
 
 The server-side part of Picto Web consists of the \texttt{FileWatcher}, \texttt{Transformer}, \texttt{ViewContentCache}, \texttt{PictoController}, and \texttt{Broker} components shown on the left hand side of the figure. The \texttt{FileWatcher} component is responsible for monitoring a directory that contains the models that Picto Web needs to visualise (see Section \ref{sec:picto}). When any of the files is modified (added, deleted, or updated), \texttt{FileWatcher} detects the change and notifies the \texttt{Transformer} component, which then generates, refreshes, or invalidates the contents of the respective views\footnote{The mechanisms used to implement incremental view invalidation and re-generation upon changes in models and templates are based on the work in \cite{ogunyomi2019}, but a detailed description is beyond the scope of this paper.}.
 
-After that, Picto Web puts the generated views into a cache (\texttt{ViewContentCache}) that maps the paths of the views in the tree view to their actual contents. The cache is used to avoid wastefully re-generating views which cannot have been impacted since the last time a client requested them.
+After that, Picto Web puts the generated views into a cache (\texttt{ViewContentCache}) that maps the paths of the views in the tree view to their actual contents. The cache is used to avoid wastefully re-generating views which cannot have been impacted since the last time a client requested them. Therefore, Picto Web can respond promptly to multiple, repeated requests for the same views. 
 
 Every time a client requests the content of a specific view, \texttt{PictoController} receives and handles the request by retrieving the view content from \texttt{ViewContentCache} using the view's path sent in the request as the key for the map. The retrieved content is then returned to the client to display.
 
@@ -567,6 +567,25 @@ In this paper, we presented Picto Web, a web-based version of the Picto model vi
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{bibliography}
+
+%insert column break
+\vfill\null
+
+%%
+%% If your work has an appendix, this is the place to put it.
+\appendix
+\section{Appendix A: Setup and Run}
+
+Readers can find more information about Picto Web at the following links. The links also contain the instructions that allow users to set up and run Picto Web.
+\begin{itemize}
+	\item Source Code at GitHub:\\
+	\url{https://github.com/epsilonlabs/picto-web}
+	\item Docker Cointainer:\\
+	\url{https://hub.docker.com/r/alfayohannisyorkacuk/picto-web}
+	\item Video:\\
+	\url{https://shorturl.at/ijtz1} \\
+	\url{https://drive.google.com/drive/folders/1BCEKJhsEq50Yi7xFjx2Wpc6j-68Wtcxv?usp=sharing}
+\end{itemize}
 
 \end{document}
 \endinput
